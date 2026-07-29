@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1200" role="img" aria-label="Abundant Capital Partners, private lending on investment real estate, Charlotte, North Carolina">
+  <defs>
+    <linearGradient id="plateBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#1A2947"/>
+      <stop offset="55%"  stop-color="#14203B"/>
+      <stop offset="100%" stop-color="#0E1729"/>
+    </linearGradient>
+    <radialGradient id="goldGlow" cx="50%" cy="26%" r="58%">
+      <stop offset="0%"  stop-color="#B29063" stop-opacity="0.17"/>
+      <stop offset="70%" stop-color="#B29063" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="960" height="1200" fill="url(#plateBg)"/>
+  <rect width="960" height="1200" fill="url(#goldGlow)"/>
+
+  <rect x="40" y="40" width="880" height="1120" fill="none"
+        stroke="#B29063" stroke-opacity="0.32" stroke-width="1.5"/>
+  <rect x="52" y="52" width="856" height="1096" fill="none"
+        stroke="#B29063" stroke-opacity="0.14" stroke-width="1"/>
+
+  <g transform="translate(290.1,172.3) scale(1.9)">
+    <path d="M183.97,129.65 L169.31,84.54 L141.26,103.75 L149.98,130.60 Z" fill="#F7F3EC"/>
+    <path d="M166.55,80.75 L128.18,52.87 L116.77,84.90 L139.61,101.49 Z" fill="#F7F3EC"/>
+    <path d="M123.72,51.42 L76.28,51.42 L85.88,84.03 L114.12,84.03 Z" fill="#B29063"/>
+    <path d="M71.82,52.87 L33.45,80.75 L60.39,101.49 L83.23,84.90 Z" fill="#F7F3EC"/>
+    <path d="M30.69,84.54 L16.03,129.65 L50.02,130.60 L58.74,103.75 Z" fill="#F7F3EC"/>
+    <rect x="16.03" y="134.5" width="33.99" height="41.5" fill="#F7F3EC"/>
+    <rect x="149.98" y="134.5" width="33.99" height="41.5" fill="#F7F3EC"/>
+  </g>
+
+  <text x="480" y="660" text-anchor="middle"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="58" font-weight="700" letter-spacing="7" fill="#F7F3EC">ABUNDANT CAPITAL</text>
+  <text x="480" y="734" text-anchor="middle"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="58" font-weight="700" letter-spacing="20" fill="#F7F3EC">PARTNERS</text>
+
+  <rect x="410" y="790" width="140" height="1.5" fill="#B29063" opacity="0.75"/>
+
+  <text x="480" y="848" text-anchor="middle"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="20" font-weight="600" letter-spacing="7" fill="#B29063">CHARLOTTE, NORTH CAROLINA</text>
+
+  <text x="480" y="952" text-anchor="middle"
+        font-family="'Playfair Display', Georgia, 'Times New Roman', serif"
+        font-size="36" font-style="italic" fill="#DCEDFA" opacity="0.82">Committed to the closing table.</text>
+
+  <text x="480" y="1032" text-anchor="middle"
+        font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif"
+        font-size="17" font-weight="600" letter-spacing="5" fill="#B29063" opacity="0.8">20+ YEARS  ·  1,000+ DEALS FUNDED</text>
+</svg>

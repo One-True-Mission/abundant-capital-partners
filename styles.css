@@ -584,6 +584,9 @@ section[id] { scroll-margin-top: 96px; }
 
 /* Light-blue proof tiles, used for the draw turnaround numbers */
 .proof-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; }
+.proof-row--three { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.proof-row--three .proof-tile { padding: 18px 16px; }
+.proof-row--three .proof-tile strong { font-size: 1.55rem; }
 .proof-tile {
   background: var(--blue-tint); border: 1px solid var(--blue-line);
   border-radius: var(--radius-card); padding: 22px 24px;
@@ -1141,7 +1144,7 @@ section[id] { scroll-margin-top: 96px; }
   .program-detail-head { flex-direction: column; align-items: flex-start; gap: 16px; }
   .form-toggle { display: flex; width: 100%; }
   .form-toggle-btn { flex: 1; padding: 12px 14px; font-size: 0.88rem; text-align: center; }
-  .proof-row { grid-template-columns: 1fr; }
+  .proof-row, .proof-row--three { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }
   .gallery-stage { height: 230px; }

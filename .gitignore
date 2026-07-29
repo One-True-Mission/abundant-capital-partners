@@ -4,3 +4,6 @@ CHECKLIST*
 *.internal.md
 Thumbs.db
 .DS_Store
+
+# stray nested clone, not part of the site
+abundant-capital-partners/
