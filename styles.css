@@ -445,24 +445,42 @@ section[id] { scroll-margin-top: 96px; }
 .assurance-item p { color: var(--ink-soft); font-size: 0.96rem; margin: 0; }
 
 /* ============================================================
-   LOAN PROGRAM CARDS
-   Ten programs, 2-up so the rows divide evenly and the cards stay
-   wide enough to describe fit rather than a price. Each card has a
-   slot reserved for a spec block if terms are ever published.
+   PROGRAM ICONS
+   There is no honest photograph of a bridge loan or a DSCR loan,
+   so the programs are marked with line icons instead of stock
+   imagery. Gold on a light blue well, matching the step numerals.
    ============================================================ */
-.program-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.program-icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px; flex: none;
+  background: var(--blue-tint); border: 1px solid var(--blue-line);
+  border-radius: 50%; color: var(--gold-deep);
+}
+.program-icon svg { width: 26px; height: 26px; }
+.program-icon--lg { width: 68px; height: 68px; }
+.program-icon--lg svg { width: 33px; height: 33px; }
+.program-card:hover .program-icon { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+/* ============================================================
+   LOAN PROGRAM CARDS (homepage, six of ten)
+   3-up so six items land as an even 3x2 at every step down.
+   Each card keeps a slot reserved for a spec block if terms
+   are ever published.
+   ============================================================ */
+.program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .program-card {
-  display: grid; grid-template-columns: 200px 1fr;
+  display: flex; flex-direction: column;
   background: var(--frame-card); border: 1px solid var(--line);
-  border-radius: var(--radius-card); overflow: hidden;
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius-card);
   box-shadow: var(--shadow-soft);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 .program-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
-.program-card img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; border-right: 3px solid var(--gold); }
-.program-card .card-body { padding: 26px 28px; display: flex; flex-direction: column; }
-.program-card h3 { font-size: 1.22rem; margin-bottom: 8px; }
-.program-card p { color: var(--ink-soft); font-size: 0.95rem; }
+.program-card .card-body { padding: 30px 28px 32px; display: flex; flex-direction: column; flex: 1; }
+.program-card .program-icon { margin-bottom: 18px; transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; }
+.program-card h3 { font-size: 1.18rem; margin-bottom: 9px; }
+.program-card p { color: var(--ink-soft); font-size: 0.94rem; }
 .program-fit {
   margin-top: 14px; padding-top: 13px; border-top: 1px dashed var(--line-strong);
   font-size: 0.88rem; color: var(--ink);
@@ -474,6 +492,23 @@ section[id] { scroll-margin-top: 96px; }
   transition: color 0.2s ease;
 }
 .program-card .card-link:hover { color: var(--gold-deep); }
+
+/* ============================================================
+   PROGRAM DETAIL (loan programs page)
+   One card per program: icon and heading across the top, the
+   prose beneath it, then the fit boxes. No imagery, because a
+   stock photo of a "bridge loan" would be filler.
+   ============================================================ */
+.program-detail-head {
+  display: flex; align-items: center; gap: 22px;
+  padding-bottom: 26px; margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.program-detail-head .eyebrow { margin-bottom: 6px; }
+.program-detail-head h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); }
+.program-detail-body { max-width: 900px; }
+.program-detail-body p { color: var(--ink-soft); }
+.program-detail-body p + p { margin-top: 16px; }
 
 /* Reserved slot: drops a specs block into any program card later
    with no redesign. Unused until terms are published. */
@@ -763,9 +798,10 @@ section[id] { scroll-margin-top: 96px; }
 .qa-a-inner p + p { margin-top: 12px; }
 
 /* ============================================================
-   RESOURCE TEASER CARDS
+   RESOURCE CARDS
    ============================================================ */
 .res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.res-grid--two { grid-template-columns: repeat(2, 1fr); }
 .res-card {
   display: flex; flex-direction: column;
   background: var(--frame-card); border: 1px solid var(--line);
@@ -781,6 +817,56 @@ section[id] { scroll-margin-top: 96px; }
   color: var(--navy); transition: color 0.2s ease;
 }
 .res-card .card-link:hover { color: var(--gold-deep); }
+
+/* Editorial variant: a gold Playfair numeral runs alongside the
+   kicker so the hub reads as a set of pieces rather than a row of
+   generic tiles. */
+.res-card--numbered { padding-top: 26px; }
+.res-card-top {
+  display: flex; align-items: baseline; gap: 14px;
+  padding-bottom: 16px; margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.res-num {
+  font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: 1.9rem; line-height: 1; letter-spacing: 0; color: var(--gold);
+  flex: none;
+}
+.res-card-top .kicker { margin-bottom: 0; }
+.res-readtime {
+  margin-left: auto; font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   FORM TOGGLE (contact page)
+   Two genuinely different forms, each in its own frame, swapped
+   by a segmented control rather than merged into one long form.
+   ============================================================ */
+.form-toggle {
+  display: inline-flex; gap: 6px; padding: 6px;
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: 999px; box-shadow: var(--shadow-soft);
+  margin-bottom: 40px;
+}
+.form-toggle-btn {
+  font-family: var(--font-body); font-size: 0.95rem; font-weight: 600;
+  color: var(--ink-soft); padding: 12px 28px; border-radius: 999px;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.form-toggle-btn:hover { color: var(--navy); }
+.form-toggle-btn.is-active {
+  background: var(--green); color: #fff;
+  box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.3);
+}
+.form-panel[hidden] { display: none; }
+.section--tight-bottom { padding-bottom: 0; }
+.section--tight-top { padding-top: 34px; }
+.panel-head { margin-bottom: 30px; }
+.panel-head h2 { margin-bottom: 12px; }
+.panel-head p { color: var(--ink-soft); font-size: 1.04rem; }
 
 /* ---------- REVIEW NOTICE (draft content flag, internal) ---------- */
 .draft-flag {
@@ -1016,7 +1102,7 @@ section[id] { scroll-margin-top: 96px; }
   .container { padding: 50px 36px; }
   .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 30px; }
   .assurance-grid { grid-template-columns: 1fr; gap: 36px; }
-  .program-grid { grid-template-columns: 1fr; }
+  .program-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .process-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .res-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .value-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -1037,18 +1123,24 @@ section[id] { scroll-margin-top: 96px; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
   .hours-grid { grid-template-columns: 1fr; }
   .gallery-stage { height: 340px; }
-  /* 6 pillars and 6 scenarios go 3-up to 2x3, never a 2+1 orphan. */
+  /* 6 pillars, 6 scenarios, 6 programs go 3-up to 2x3, never a 2+1 orphan. */
   .value-grid { grid-template-columns: repeat(2, 1fr); }
   .scenario-grid { grid-template-columns: repeat(2, 1fr); }
+  .program-grid { grid-template-columns: repeat(2, 1fr); }
+  .res-grid--two { grid-template-columns: repeat(2, 1fr); }
   .fit-grid { grid-template-columns: 1fr; }
+  .program-detail-head { gap: 18px; }
 }
 @media (max-width: 560px) {
   body { font-size: 16px; }
   .container { width: calc(100% - 32px); padding: 36px 22px; }
   .stat-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
-  .program-card { grid-template-columns: 1fr; }
-  .program-card img { min-height: 0; aspect-ratio: 16 / 9; border-right: none; border-bottom: 3px solid var(--gold); }
+  .program-grid { grid-template-columns: 1fr; }
+  .res-grid--two { grid-template-columns: 1fr; }
   .process-grid { grid-template-columns: 1fr; }
+  .program-detail-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .form-toggle { display: flex; width: 100%; }
+  .form-toggle-btn { flex: 1; padding: 12px 14px; font-size: 0.88rem; text-align: center; }
   .proof-row { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
   .field-row { grid-template-columns: 1fr; }

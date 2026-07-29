@@ -117,6 +117,65 @@
     });
   });
 
+  /* ---------- Contact page: deal form / question form toggle ----------
+     Two genuinely different forms, each in its own frame. They swap
+     rather than merge, so neither inherits the other's fields, labels,
+     or fine print. Deep links: #deal and #question. ---------- */
+  var formPanels = document.querySelectorAll(".form-panel[data-panel]");
+  if (formPanels.length) {
+    var toggleBtns = document.querySelectorAll(".form-toggle-btn[data-target]");
+
+    var showPanel = function (name, updateHash) {
+      var found = false;
+      formPanels.forEach(function (panel) {
+        if (panel.getAttribute("data-panel") === name) found = true;
+      });
+      if (!found) return false;
+
+      formPanels.forEach(function (panel) {
+        var match = panel.getAttribute("data-panel") === name;
+        if (match) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+      toggleBtns.forEach(function (btn) {
+        var on = btn.getAttribute("data-target") === name;
+        btn.classList.toggle("is-active", on);
+        btn.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      if (updateHash && window.history && window.history.replaceState) {
+        window.history.replaceState(null, "", "#" + name);
+      }
+      return true;
+    };
+
+    toggleBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        showPanel(btn.getAttribute("data-target"), true);
+      });
+    });
+
+    /* Links inside one panel that jump to the other one. */
+    document.querySelectorAll("a[data-target]").forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (showPanel(link.getAttribute("data-target"), true)) {
+          var anchor = document.querySelector(".form-toggle");
+          if (anchor) anchor.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+        }
+      });
+    });
+
+    var panelFromHash = function () {
+      var name = (window.location.hash || "").replace("#", "");
+      if (name) showPanel(name, false);
+    };
+
+    /* Covers arriving on #question from another page, plus back and forward
+       navigation and any same-page hash change after load. */
+    window.addEventListener("hashchange", panelFromHash);
+    panelFromHash();
+  }
+
   /* ---------- Phone fields: live US formatting ---------- */
   function initPhoneFields() {
     document.querySelectorAll('input[type="tel"]').forEach(function (field) {
