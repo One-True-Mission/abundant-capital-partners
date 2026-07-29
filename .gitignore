@@ -1,0 +1,6 @@
+# OTM internal notes, never in the repo
+SPEC*
+CHECKLIST*
+*.internal.md
+Thumbs.db
+.DS_Store

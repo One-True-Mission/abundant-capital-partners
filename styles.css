@@ -1,0 +1,1084 @@
+/* ============================================================
+   ABUNDANT CAPITAL PARTNERS
+   Private lending for real estate investors. Charlotte, NC.
+   Built by OTM Web Design
+
+   Structure: locked navy body background, warm sandstone light
+   frames floating over it, gold Playfair italic as the only
+   accent face, green reserved exclusively for calls to action.
+   ============================================================ */
+
+/* ---------- RESET ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+input, textarea, select { font-family: inherit; }
+
+/* ---------- TOKENS ---------- */
+:root {
+  /* Core palette, supplied by the client */
+  --navy: #14203B;
+  --light-blue: #DCEDFA;
+  --gold: #B29063;
+  --green: #27AE60;
+
+  /* Extended ramp */
+  --navy-deep: #0B1425;
+  --navy-soft: #24365C;
+  --navy-rgb: 20, 32, 59;
+
+  --blue-tint: #EDF6FD;
+  --blue-line: #C2DCF0;
+  --blue-soft: #B9D9F0;
+
+  --gold-deep: #8E7049;
+  --gold-bright: #CFAE81;
+  --gold-rgb: 178, 144, 99;
+
+  --green-deep: #1E8F4E;
+  --green-bright: #46C97C;
+  --green-rgb: 39, 174, 96;
+
+  /* Text */
+  --ink: #262B38;
+  --ink-soft: #565E70;
+  --heading: #14203B;
+
+  /* Frames: sandstone / wheat, pushed heavier than a plain cream */
+  --frame: rgba(243, 237, 226, 0.94);
+  --frame-nav: rgba(243, 237, 226, 0.93);
+  --frame-card: rgba(252, 249, 243, 0.97);
+  --frame-deep: rgba(11, 20, 37, 0.94);
+  --frame-deep-text: #EAF1F9;
+  --frame-deep-soft: #A8BBD4;
+
+  --line: rgba(40, 48, 66, 0.14);
+  --line-strong: rgba(40, 48, 66, 0.22);
+
+  --bg-fallback: #0B1425;
+  --media-fallback: linear-gradient(150deg, #24365C 0%, #0B1425 100%);
+
+  --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.34);
+  --shadow-lift: 0 22px 50px rgba(0, 0, 0, 0.46);
+
+  --container: 1240px;
+  --radius: 14px;
+  --radius-card: 11px;
+
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-accent: 'Playfair Display', Georgia, serif;
+}
+
+/* ---------- BASE ---------- */
+body {
+  font-family: var(--font-body);
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg-fallback);
+  overflow-x: hidden;
+  width: 100%;
+}
+body.nav-open { overflow: hidden; }
+
+/* Locked body background. Darkened only by the brightness filter on
+   this pseudo-element, never by a second overlay layer. Fixed
+   positioning here works on iOS where background-attachment fails. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url('assets/body-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg-fallback);
+  filter: brightness(0.52) saturate(1.04);
+  z-index: -1;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: var(--heading);
+}
+h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.3rem, 2.2vw, 1.7rem); }
+h4 { font-size: 1.1rem; }
+p { text-wrap: pretty; }
+
+/* The accent face. Playfair Display appears in italic 400 only, tinted
+   gold, and only as the emphasized phrase inside a heading. It never
+   sets a full heading on its own. */
+h1 em, h2 em, h3 em, h4 em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--gold-deep);
+}
+.hero h1 em, .page-hero h1 em, .cta h2 em,
+.container--deep h2 em, .container--deep h3 em { color: var(--gold-bright); }
+
+.lede { font-size: 1.14rem; color: var(--ink-soft); }
+.muted { color: var(--ink-soft); }
+
+/* ---------- SHARED LAYOUT ---------- */
+.inner { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 24px; }
+section { padding: 90px 0; position: relative; }
+section[id] { scroll-margin-top: 96px; }
+
+.container {
+  position: relative;
+  width: calc(100% - 48px);
+  max-width: var(--container);
+  margin: 0 auto;
+  background: var(--frame);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lift);
+  backdrop-filter: blur(6px);
+  padding: 70px 60px;
+}
+.container--deep {
+  background: var(--frame-deep);
+  border-color: rgba(255, 255, 255, 0.09);
+  border-top-color: var(--gold);
+  color: var(--frame-deep-text);
+}
+.container--deep h2, .container--deep h3, .container--deep h4 { color: #fff; }
+.container--deep p { color: var(--frame-deep-soft); }
+.container--prose { max-width: 880px; }
+
+/* ---------- EYEBROW ----------
+   Gold Playfair italic sitting above the heading, opened by a short
+   gold rule. This pairing against tight-tracked bold Inter is the
+   character of the whole build. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+  color: var(--gold-deep);
+  margin-bottom: 16px;
+}
+.eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--gold); flex: none; }
+.eyebrow--center { justify-content: center; }
+.eyebrow--center::after { content: ""; width: 32px; height: 1px; background: var(--gold); flex: none; }
+.hero .eyebrow, .page-hero .eyebrow, .cta .eyebrow, .container--deep .eyebrow { color: var(--gold-bright); }
+.hero .eyebrow::before, .hero .eyebrow::after,
+.page-hero .eyebrow::before, .page-hero .eyebrow::after,
+.cta .eyebrow::before, .cta .eyebrow::after,
+.container--deep .eyebrow::before, .container--deep .eyebrow::after { background: var(--gold-bright); }
+
+/* Small uppercase label, used for card kickers and field labels */
+.kicker {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 8px;
+}
+
+/* ---------- BUTTONS ----------
+   Green is the action color and nothing else on the page is green.
+   That is the whole point: the eye goes straight to it. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 15px 30px;
+  border-radius: 8px;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.btn-primary { background: var(--green); color: #fff; box-shadow: 0 8px 22px rgba(var(--green-rgb), 0.32); }
+.btn-primary:hover { background: var(--green-deep); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(var(--green-rgb), 0.42); }
+.btn-outline { border: 2px solid var(--navy); color: var(--navy); }
+.btn-outline:hover { background: var(--navy); color: #fff; transform: translateY(-3px); }
+.btn-ghost { border: 2px solid rgba(255, 255, 255, 0.55); color: #fff; }
+.btn-ghost:hover { background: #fff; color: var(--navy); transform: translateY(-3px); }
+.btn-gold { border: 2px solid var(--gold); color: var(--gold-deep); }
+.btn-gold:hover { background: var(--gold); color: #fff; transform: translateY(-3px); }
+.btn-block { width: 100%; }
+.btn-lg { padding: 17px 36px; font-size: 1.05rem; }
+
+/* ============================================================
+   NAV
+   Nav takes the same sandstone frame tone as the section cards,
+   so nav, cards, and footer read as one framing system.
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--frame-nav);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--container); margin: 0 auto; padding: 10px 24px; gap: 20px;
+}
+
+/* Wordmark: swap the whole .brand block for an <img> when the real
+   logo lands. Nothing else in the build references it. */
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand img { height: 52px; width: auto; transition: transform 0.25s ease; }
+.brand:hover img { transform: scale(1.03); }
+.brand-word { display: flex; flex-direction: column; line-height: 1; }
+.brand-word strong {
+  font-family: var(--font-body); font-weight: 700; font-size: 1.16rem;
+  letter-spacing: 0.02em; text-transform: uppercase; color: var(--heading);
+}
+.brand-word span {
+  font-family: var(--font-accent); font-style: italic; font-size: 1rem;
+  color: var(--gold-deep); margin-top: 3px;
+}
+
+.nav-links { display: flex; align-items: center; gap: 26px; }
+.nav-links a {
+  font-size: 0.95rem; font-weight: 500; color: var(--ink);
+  padding: 6px 0; position: relative; transition: color 0.2s ease;
+}
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px;
+  background: var(--gold); transition: width 0.25s ease;
+}
+.nav-links a:hover, .nav-links a.is-active { color: var(--navy); font-weight: 600; }
+.nav-links a:hover::after, .nav-links a.is-active::after { width: 100%; }
+.nav-phone { font-weight: 700 !important; color: var(--navy) !important; white-space: nowrap; }
+.nav-cta {
+  font-weight: 600; background: var(--green); color: #fff !important;
+  padding: 11px 22px; border-radius: 8px;
+  box-shadow: 0 6px 16px rgba(var(--green-rgb), 0.28);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.nav-cta::after { display: none; }
+.nav-cta:hover { background: var(--green-deep); transform: translateY(-2px); }
+
+/* ---------- HAMBURGER ---------- */
+.hamburger { display: none; position: relative; width: 48px; height: 48px; margin-left: auto; z-index: 220; }
+.hamburger span {
+  position: absolute; left: 11px; width: 26px; height: 2.5px;
+  background: var(--navy); border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.5, 0, 0.2, 1);
+}
+.hamburger span:nth-child(1) { top: 16px; }
+.hamburger span:nth-child(2) { top: 22.75px; }
+.hamburger span:nth-child(3) { top: 29.5px; }
+.hamburger.is-open span:nth-child(1) { transform: translateY(6.75px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-6.75px) rotate(-45deg); }
+
+/* ---------- MOBILE MENU ---------- */
+.nav-backdrop {
+  position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none; transition: opacity 0.35s ease; z-index: 200;
+}
+.nav-backdrop.is-open { opacity: 1; pointer-events: auto; }
+.mobile-menu {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(82vw, 360px);
+  background: var(--frame); border-left: 3px solid var(--gold);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
+  padding: 96px 30px 50px; transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1);
+  z-index: 210; display: flex; flex-direction: column; overflow-y: auto;
+}
+.mobile-menu.is-open { transform: translateX(0); }
+.mobile-menu a {
+  font-size: 1.1rem; font-weight: 600; color: var(--heading);
+  padding: 15px 0; border-bottom: 1px solid var(--line);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+.mobile-menu a:hover, .mobile-menu a.is-active { color: var(--gold-deep); padding-left: 8px; }
+.mobile-menu .btn { margin-top: 24px; width: 100%; }
+.mobile-menu .btn:hover { padding-left: 30px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative; min-height: 90vh; display: flex; align-items: center;
+  padding: 150px 0 96px; background-color: var(--navy-deep);
+  background-size: cover; background-position: center; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(11, 20, 37, 0.68) 0%, rgba(11, 20, 37, 0.54) 45%, rgba(11, 20, 37, 0.26) 100%);
+}
+.hero-content { position: relative; max-width: 780px; }
+.hero h1 { color: #fff; margin-bottom: 22px; }
+.hero p { color: #D3DEEC; font-size: 1.16rem; max-width: 640px; margin-bottom: 34px; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+.hero-trust { display: flex; flex-wrap: wrap; gap: 14px 30px; margin-top: 40px; }
+.hero-trust span {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
+  text-transform: uppercase; color: #BACBE0;
+}
+.hero-trust span::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none;
+  background: var(--gold-bright); box-shadow: 0 0 10px rgba(var(--gold-rgb), 0.8);
+}
+
+/* ---------- PAGE HERO ---------- */
+.page-hero {
+  position: relative; display: flex; align-items: center; text-align: center;
+  min-height: 46vh; padding: 155px 0 80px; background-color: var(--navy-deep);
+  background-size: cover; background-position: center;
+  border-bottom: 4px solid var(--gold); overflow: hidden;
+}
+.page-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(100deg, rgba(11, 20, 37, 0.66) 0%, rgba(11, 20, 37, 0.45) 55%, rgba(11, 20, 37, 0.24) 100%);
+}
+.page-hero .inner { position: relative; max-width: 860px; }
+.page-hero .eyebrow { justify-content: center; }
+.page-hero h1 { color: #fff; margin-bottom: 18px; }
+.page-hero p { color: #D3DEEC; font-size: 1.12rem; max-width: 660px; margin: 0 auto; }
+.page-hero--short {
+  min-height: 30vh; padding: 145px 0 58px;
+  background-image: linear-gradient(150deg, #1B2A49 0%, #0B1425 100%);
+  border-bottom: 4px solid var(--gold);
+}
+.page-hero--short::before { background: none; }
+
+/* ============================================================
+   MARQUEE (the only full-bleed band)
+   ============================================================ */
+.marquee {
+  background: var(--frame-deep);
+  border-top: 2px solid var(--gold);
+  border-bottom: 2px solid var(--gold);
+  overflow: hidden;
+}
+.marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-item {
+  display: inline-flex; align-items: center; padding: 15px 0;
+  font-size: 0.95rem; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--frame-deep-text); white-space: nowrap;
+}
+.marquee-item::after {
+  content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); margin: 0 28px;
+}
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ============================================================
+   SECTION HEADS
+   ============================================================ */
+.section-head { max-width: 780px; margin-bottom: 48px; }
+.section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+.section-head p { margin-top: 14px; color: var(--ink-soft); font-size: 1.06rem; }
+.container--deep .section-head p { color: var(--frame-deep-soft); }
+
+/* ============================================================
+   STATS BAND (contained deep card)
+   ============================================================ */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center; }
+.stat-item strong {
+  display: block; font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: clamp(2.4rem, 4vw, 3.3rem); color: var(--gold-bright); line-height: 1.05;
+  letter-spacing: 0;
+}
+.stat-item span {
+  display: block; margin-top: 10px; font-size: 0.82rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--frame-deep-soft);
+}
+
+/* ============================================================
+   CLOSE CERTAINTY
+   The highest-value block on the site. Everything here answers
+   one question: can you actually close?
+   ============================================================ */
+.assurance-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 54px; align-items: start; }
+.assurance-copy p { color: var(--ink-soft); }
+.assurance-copy p + p { margin-top: 16px; }
+
+.pullquote {
+  position: relative;
+  margin: 28px 0 0;
+  padding: 30px 34px 30px 38px;
+  background: var(--blue-tint);
+  border: 1px solid var(--blue-line);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-card);
+}
+.pullquote p {
+  font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: clamp(1.2rem, 2vw, 1.45rem); line-height: 1.5;
+  color: var(--navy) !important; margin: 0;
+}
+.pullquote cite {
+  display: block; margin-top: 14px; font-family: var(--font-body); font-style: normal;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold-deep);
+}
+
+.assurance-list { display: grid; gap: 16px; }
+.assurance-item {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 24px 26px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.assurance-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
+.assurance-item h3 { font-size: 1.12rem; margin-bottom: 7px; }
+.assurance-item p { color: var(--ink-soft); font-size: 0.96rem; margin: 0; }
+
+/* ============================================================
+   LOAN PROGRAM CARDS
+   Ten programs, 2-up so the rows divide evenly and the cards stay
+   wide enough to describe fit rather than a price. Each card has a
+   slot reserved for a spec block if terms are ever published.
+   ============================================================ */
+.program-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.program-card {
+  display: grid; grid-template-columns: 200px 1fr;
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.program-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
+.program-card img { width: 100%; height: 100%; min-height: 190px; object-fit: cover; border-right: 3px solid var(--gold); }
+.program-card .card-body { padding: 26px 28px; display: flex; flex-direction: column; }
+.program-card h3 { font-size: 1.22rem; margin-bottom: 8px; }
+.program-card p { color: var(--ink-soft); font-size: 0.95rem; }
+.program-fit {
+  margin-top: 14px; padding-top: 13px; border-top: 1px dashed var(--line-strong);
+  font-size: 0.88rem; color: var(--ink);
+}
+.program-fit strong { color: var(--gold-deep); font-weight: 700; }
+.program-card .card-link {
+  display: inline-block; margin-top: auto; padding-top: 16px;
+  font-weight: 600; font-size: 0.92rem; color: var(--navy);
+  transition: color 0.2s ease;
+}
+.program-card .card-link:hover { color: var(--gold-deep); }
+
+/* Reserved slot: drops a specs block into any program card later
+   with no redesign. Unused until terms are published. */
+.program-specs {
+  margin-top: 14px; padding: 14px 16px;
+  background: var(--blue-tint); border: 1px solid var(--blue-line);
+  border-radius: 8px; font-size: 0.88rem;
+}
+.program-specs dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; }
+.program-specs dt { font-weight: 600; color: var(--ink-soft); }
+.program-specs dd { font-weight: 700; color: var(--navy); text-align: right; }
+
+/* ============================================================
+   PROCESS STEPS
+   ============================================================ */
+.process-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.step {
+  position: relative; background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 30px 28px 32px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.step:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px; margin-bottom: 16px;
+  background: var(--blue-tint); border: 1px solid var(--blue-line); border-radius: 50%;
+  font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: 1.55rem; letter-spacing: 0; color: var(--gold-deep); line-height: 1;
+}
+.step h3 { font-size: 1.16rem; margin-bottom: 9px; }
+.step p { color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ============================================================
+   WHO WE SERVE
+   ============================================================ */
+.serve-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.serve-card {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-top: 3px solid var(--gold); border-radius: var(--radius-card);
+  padding: 32px 30px; box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.serve-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.serve-card h3 { margin-bottom: 10px; }
+.serve-card p { color: var(--ink-soft); font-size: 0.98rem; }
+.serve-card p + p { margin-top: 12px; }
+
+/* The honest "not a fit" note. Naming who we turn away is the
+   trust signal, so it gets a real block rather than fine print. */
+.notfit {
+  margin-top: 26px; padding: 28px 32px;
+  background: var(--frame-deep); border-radius: var(--radius-card);
+  border-left: 4px solid var(--gold);
+}
+.notfit h3 { color: #fff; font-size: 1.14rem; margin-bottom: 8px; }
+.notfit p { color: var(--frame-deep-soft); font-size: 0.98rem; }
+
+/* ============================================================
+   FEATURE BAND
+   ============================================================ */
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; align-items: center; }
+.feature-grid.reverse .feature-media { order: 2; }
+.feature-media {
+  border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-soft);
+  border: 1px solid var(--line); min-height: 400px; background: var(--media-fallback);
+}
+.feature-media img { width: 100%; height: 100%; min-height: 400px; object-fit: cover; }
+.feature-copy h2 { margin-bottom: 18px; }
+.feature-copy p { color: var(--ink-soft); }
+.feature-copy p + p { margin-top: 16px; }
+.feature-copy .btn { margin-top: 28px; }
+
+/* Light-blue proof tiles, used for the draw turnaround numbers */
+.proof-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 26px; }
+.proof-tile {
+  background: var(--blue-tint); border: 1px solid var(--blue-line);
+  border-radius: var(--radius-card); padding: 22px 24px;
+}
+.proof-tile strong {
+  display: block; font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: 2rem; letter-spacing: 0; color: var(--navy); line-height: 1.1;
+}
+.proof-tile span {
+  display: block; margin-top: 6px; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+}
+
+/* ---------- CHECK LIST ---------- */
+.check-list { display: grid; gap: 11px; margin-top: 22px; }
+.check-list li { display: flex; gap: 12px; align-items: baseline; color: var(--ink); font-weight: 500; font-size: 0.98rem; }
+.check-list li::before { content: "\2713"; color: var(--gold-deep); font-weight: 700; flex: none; }
+.container--deep .check-list li { color: var(--frame-deep-text); }
+.container--deep .check-list li::before { color: var(--gold-bright); }
+
+/* ---------- CHIP LIST (property types, service area) ---------- */
+.chip-list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.chip-list li {
+  background: var(--blue-tint); border: 1px solid var(--blue-line); border-radius: 30px;
+  padding: 9px 22px; color: var(--navy); font-weight: 600; font-size: 0.9rem;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.chip-list li:hover { border-color: var(--gold); background: #fff; }
+
+/* ============================================================
+   ANCHOR NAV (loan programs page)
+   ============================================================ */
+.anchor-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.anchor-nav a {
+  background: var(--frame-card); border: 1px solid var(--line); border-radius: 30px;
+  padding: 9px 20px; font-size: 0.88rem; font-weight: 600; color: var(--navy);
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.anchor-nav a:hover { border-color: var(--gold); background: var(--blue-tint); color: var(--gold-deep); }
+
+/* ============================================================
+   FIT BOXES
+   Saying plainly when a program is the wrong tool is the point.
+   A lender who tells you no is a lender you can believe.
+   ============================================================ */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 26px; }
+.fit-box { border-radius: var(--radius-card); padding: 24px 26px; border: 1px solid var(--line); }
+.fit-box--yes { background: var(--blue-tint); border-color: var(--blue-line); }
+.fit-box--no { background: rgba(20, 32, 59, 0.04); }
+.fit-label {
+  display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.fit-box--yes .fit-label { color: var(--gold-deep); }
+.fit-box--no .fit-label { color: var(--ink-soft); }
+.fit-box .check-list, .fit-box .x-list { margin-top: 0; }
+.x-list { display: grid; gap: 11px; }
+.x-list li { display: flex; gap: 12px; align-items: baseline; color: var(--ink-soft); font-size: 0.95rem; }
+.x-list li::before { content: "\2715"; color: var(--ink-soft); font-weight: 700; flex: none; opacity: 0.6; }
+
+/* ============================================================
+   VERTICAL NUMBERED FLOW (process page)
+   ============================================================ */
+.steps-flow { display: grid; gap: 18px; }
+.flow-step {
+  display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: start;
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 30px 34px; box-shadow: var(--shadow-soft);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.flow-step:hover { border-color: var(--gold); box-shadow: var(--shadow-lift); }
+.flow-num {
+  display: flex; align-items: center; justify-content: center;
+  width: 58px; height: 58px; flex: none;
+  background: var(--blue-tint); border: 1px solid var(--blue-line); border-radius: 50%;
+  font-family: var(--font-accent); font-style: italic; font-weight: 400;
+  font-size: 1.6rem; letter-spacing: 0; color: var(--gold-deep); line-height: 1;
+}
+.flow-step h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.flow-step p { color: var(--ink-soft); }
+.flow-step p + p { margin-top: 12px; }
+
+/* ============================================================
+   VALUE CARDS (the six pillars, about page)
+   ============================================================ */
+.value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.value-card {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-top: 3px solid var(--gold); border-radius: var(--radius-card);
+  padding: 30px 28px; box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.value-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); }
+.value-card h3 { font-size: 1.14rem; margin-bottom: 9px; }
+.value-card p { color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ============================================================
+   DEAL SCENARIOS
+   These describe categories of problem we solve. They are not
+   case studies and carry no transaction detail, no figures, and
+   no addresses. Real case studies drop into this same component
+   once the client has them cleared to publish.
+   ============================================================ */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.scenario-card {
+  display: flex; flex-direction: column;
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 30px 28px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.scenario-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
+.scenario-card .kicker { color: var(--gold-deep); }
+.scenario-card h3 { font-size: 1.12rem; margin-bottom: 10px; }
+.scenario-card p { color: var(--ink-soft); font-size: 0.95rem; }
+.scenario-card p + p { margin-top: 11px; }
+.scenario-outcome {
+  margin-top: auto; padding-top: 16px; border-top: 1px dashed var(--line-strong);
+  font-size: 0.9rem; color: var(--ink);
+}
+.scenario-outcome strong { color: var(--gold-deep); }
+
+/* ============================================================
+   ARTICLE META (resources)
+   ============================================================ */
+.article-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 22px;
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.article-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.article-meta span + span::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+
+/* ============================================================
+   GALLERY CAROUSEL (featured-center coverflow, auto-advancing)
+   ============================================================ */
+.gallery-carousel { position: relative; }
+.gallery-stage { position: relative; height: 460px; overflow: hidden; }
+.gallery-slide {
+  position: absolute; top: 0; left: 50%;
+  width: 60%; height: 100%;
+  transform: translateX(-50%) scale(0.7);
+  opacity: 0;
+  transition: transform 0.55s ease, opacity 0.55s ease;
+  pointer-events: none;
+  margin: 0;
+}
+.gallery-slide img {
+  width: 100%; height: 100%; object-fit: cover;
+  border-radius: var(--radius-card); border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+.gallery-slide figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 26px 24px 18px;
+  background: linear-gradient(180deg, rgba(11, 20, 37, 0) 0%, rgba(11, 20, 37, 0.88) 70%);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  font-family: var(--font-accent); font-style: italic; font-size: 1.1rem;
+  color: #fff; text-align: center;
+}
+.gallery-slide.is-active { transform: translateX(-50%) scale(1); opacity: 1; z-index: 3; pointer-events: auto; }
+.gallery-slide.is-prev { transform: translateX(-108%) scale(0.78); opacity: 0.4; z-index: 2; }
+.gallery-slide.is-next { transform: translateX(8%) scale(0.78); opacity: 0.4; z-index: 2; }
+.carousel-controls { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 32px; }
+.carousel-btn {
+  background: transparent; border: 2px solid var(--navy); color: var(--navy);
+  width: 46px; height: 46px; border-radius: 50%; font-size: 1.15rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.carousel-btn:hover { background: var(--navy); color: #fff; transform: translateY(-2px); }
+.carousel-dots { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; max-width: 240px; }
+.carousel-dot {
+  width: 10px; height: 10px; border-radius: 50%; border: none;
+  background: rgba(var(--navy-rgb), 0.25);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.carousel-dot.is-active { background: var(--gold); transform: scale(1.3); }
+
+/* ============================================================
+   STRAIGHT ANSWERS (accordion)
+   The five things investors are actually worried about, named in
+   plain language and answered. Naming the fear is the trust signal.
+   ============================================================ */
+.qa-list { display: grid; gap: 14px; max-width: 900px; margin: 0 auto; }
+.qa-item {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); overflow: hidden;
+  box-shadow: var(--shadow-soft); transition: border-color 0.25s ease;
+}
+.qa-item.is-open { border-color: var(--gold); }
+.qa-q {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
+  width: 100%; text-align: left; padding: 24px 28px;
+  font-family: var(--font-body); font-size: 1.06rem; font-weight: 600;
+  color: var(--heading); transition: color 0.2s ease;
+}
+.qa-q:hover { color: var(--gold-deep); }
+.qa-q .qa-mark {
+  flex: none; width: 26px; height: 26px; margin-top: 2px; border-radius: 50%;
+  background: var(--blue-tint); border: 1px solid var(--blue-line);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold-deep); font-weight: 700; font-size: 1.05rem; line-height: 1;
+  transition: transform 0.3s ease, background 0.2s ease;
+}
+.qa-item.is-open .qa-mark { transform: rotate(45deg); background: var(--gold); color: #fff; border-color: var(--gold); }
+/* Generous ceiling on purpose: these answers run long and a tight
+   max-height silently clips the last lines. */
+.qa-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.qa-item.is-open .qa-a { max-height: 1200px; }
+.qa-a-inner { padding: 0 28px 26px; color: var(--ink-soft); }
+.qa-a-inner p + p { margin-top: 12px; }
+
+/* ============================================================
+   RESOURCE TEASER CARDS
+   ============================================================ */
+.res-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.res-card {
+  display: flex; flex-direction: column;
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 30px 28px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.res-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lift); border-color: var(--gold); }
+.res-card h3 { font-size: 1.14rem; margin-bottom: 10px; }
+.res-card p { color: var(--ink-soft); font-size: 0.95rem; }
+.res-card .card-link {
+  margin-top: auto; padding-top: 18px; font-weight: 600; font-size: 0.92rem;
+  color: var(--navy); transition: color 0.2s ease;
+}
+.res-card .card-link:hover { color: var(--gold-deep); }
+
+/* ---------- REVIEW NOTICE (draft content flag, internal) ---------- */
+.draft-flag {
+  display: inline-block; margin-bottom: 16px; padding: 6px 14px;
+  background: var(--blue-tint); border: 1px dashed var(--gold);
+  border-radius: 20px; font-size: 0.74rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-deep);
+}
+
+/* ============================================================
+   CTA STRIP (contained card, never full-bleed)
+   ============================================================ */
+.cta {
+  text-align: center; color: #fff;
+  background-color: var(--navy-deep);
+  background-image: linear-gradient(180deg, rgba(11, 20, 37, 0.62), rgba(11, 20, 37, 0.62)), url('assets/cta-bg.jpg');
+  background-size: cover; background-position: center;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.cta h2 { color: #fff; font-size: clamp(1.9rem, 3.4vw, 2.8rem); margin-bottom: 16px; }
+.cta p { color: #D3DEEC; max-width: 660px; margin: 0 auto 26px; }
+.cta-phone {
+  display: inline-block; font-family: var(--font-accent); font-style: italic;
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem); letter-spacing: 0;
+  color: var(--gold-bright); margin-bottom: 26px;
+  transition: color 0.2s ease;
+}
+.cta-phone:hover { color: #fff; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+.cta-hours {
+  margin-top: 26px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.16);
+  font-size: 0.92rem; color: var(--frame-deep-soft);
+}
+.cta-hours strong { color: var(--gold-bright); font-weight: 600; }
+
+/* ---------- HOURS PANEL ----------
+   Sunday hours are unusual for a lender and are a real
+   differentiator, so they get weight instead of a table row. */
+.hours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.hours-card {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 26px 24px; text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+.hours-card .hours-day {
+  display: block; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px;
+}
+.hours-card .hours-time {
+  display: block; font-family: var(--font-accent); font-style: italic;
+  font-size: 1.4rem; color: var(--navy); line-height: 1.25;
+}
+.hours-card--open { background: var(--blue-tint); border-color: var(--blue-line); border-top: 3px solid var(--gold); }
+.hours-card--open .hours-time { color: var(--gold-deep); }
+.hours-card--closed .hours-time { color: var(--ink-soft); }
+
+/* ============================================================
+   FOOTER
+   Same sandstone frame tone as the nav and the cards.
+   ============================================================ */
+.footer { background: var(--frame); border-top: 3px solid var(--gold); color: var(--ink-soft); padding: 70px 0 30px; }
+.footer-grid {
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px;
+  max-width: var(--container); margin: 0 auto; padding: 0 24px;
+}
+.footer-brand img { height: 62px; width: auto; margin-bottom: 14px; }
+.footer-brand p { margin-top: 6px; font-size: 0.94rem; max-width: 330px; color: var(--ink-soft); }
+.footer-tag {
+  font-family: var(--font-accent); font-style: italic; font-size: 1.14rem;
+  color: var(--gold-deep); margin-top: 14px !important;
+}
+.footer h4 {
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--heading); margin-bottom: 18px;
+}
+.footer ul li { margin-bottom: 11px; }
+.footer ul a, .footer-contact a, .footer-contact span { color: var(--ink-soft); font-size: 0.94rem; transition: color 0.2s ease; }
+.footer ul a:hover, .footer-contact a:hover { color: var(--navy); }
+.footer-contact li { display: flex; gap: 10px; align-items: flex-start; }
+
+/* Business purpose disclaimer. Sits on every page, above the
+   bottom row, and is repeated in full on disclosures.html. */
+.footer-disclaimer {
+  max-width: var(--container); margin: 46px auto 0; padding: 22px 24px 0;
+  border-top: 1px solid var(--line);
+}
+.footer-disclaimer p {
+  font-size: 0.82rem; line-height: 1.62; color: var(--ink-soft); max-width: 980px;
+}
+.footer-disclaimer strong { color: var(--navy); font-weight: 700; }
+.footer-disclaimer a { color: var(--navy); border-bottom: 1px solid rgba(var(--navy-rgb), 0.35); }
+
+.footer-bottom {
+  max-width: var(--container); margin: 24px auto 0; padding: 22px 24px 0;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+  gap: 14px; font-size: 0.86rem; color: var(--ink-soft);
+}
+.footer-legal-links { display: flex; gap: 18px; flex-wrap: wrap; }
+.footer-legal-links a { color: var(--ink-soft); }
+.footer-legal-links a:hover { color: var(--navy); }
+.footer-social { display: flex; gap: 14px; }
+.footer-social a {
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  border-radius: 8px; background: rgba(var(--gold-rgb), 0.14); color: var(--gold-deep);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.footer-social a:hover { background: var(--gold); color: #fff; }
+.footer-social svg { width: 18px; height: 18px; }
+.otm-credit { color: var(--navy) !important; font-weight: 600; border-bottom: 1px solid rgba(var(--navy-rgb), 0.4); }
+.otm-credit:hover { color: var(--gold-deep) !important; border-color: var(--gold-deep); }
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 44px; align-items: start; }
+.contact-info h2 { margin-bottom: 16px; }
+.contact-info > p { color: var(--ink-soft); margin-bottom: 26px; }
+.contact-list { display: grid; gap: 16px; margin-bottom: 30px; }
+.contact-list li { display: flex; flex-direction: column; gap: 4px; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
+.contact-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-deep); }
+.contact-list a, .contact-value { color: var(--ink); font-weight: 600; }
+.contact-list a:hover { color: var(--navy); }
+
+.form-card {
+  background: var(--frame-card); border: 1px solid var(--line);
+  border-radius: var(--radius-card); padding: 38px; box-shadow: var(--shadow-soft);
+}
+.field { margin-bottom: 20px; }
+.field label {
+  display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 8px; color: var(--ink);
+}
+.field-hint { display: block; font-size: 0.82rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--ink-soft); margin-top: 3px; }
+.field input, .field textarea, .field select {
+  width: 100%; padding: 13px 15px; border: 1px solid var(--line-strong);
+  border-radius: 8px; background: #fff; color: var(--ink); font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%), linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%); background-position: calc(100% - 20px) 22px, calc(100% - 15px) 22px; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 40px; }
+.field input::placeholder, .field textarea::placeholder { color: #98A0AF; }
+.field input:focus, .field textarea:focus, .field select:focus {
+  outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(var(--gold-rgb), 0.22);
+}
+.field input.has-error, .field textarea.has-error, .field select.has-error {
+  border-color: #C0392B; box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.16);
+}
+.field textarea { min-height: 130px; resize: vertical; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field-error { display: none; color: #C0392B; font-size: 0.82rem; font-weight: 600; margin-top: 6px; }
+.field-error.show { display: block; }
+.form-error-banner {
+  display: none; margin-bottom: 20px; padding: 14px 18px;
+  background: rgba(192, 57, 43, 0.08); border: 1px solid rgba(192, 57, 43, 0.4);
+  border-radius: 8px; color: #A5311F; font-size: 0.92rem; font-weight: 600;
+}
+.form-error-banner.show { display: block; }
+.form-fineprint { margin-top: 14px; font-size: 0.84rem; color: var(--ink-soft); text-align: center; }
+.honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Consent checkbox. Required wherever a form collects a phone number,
+   because that is what opts the visitor into calls and texts. */
+.field-consent { display: flex; gap: 12px; align-items: flex-start; }
+.field-consent input { width: 20px; height: 20px; min-width: 20px; margin-top: 3px; accent-color: var(--green); }
+.field-consent label {
+  font-size: 0.86rem; font-weight: 400; letter-spacing: 0; text-transform: none;
+  color: var(--ink-soft); line-height: 1.55; margin-bottom: 0;
+}
+.field-consent a { color: var(--navy); border-bottom: 1px solid rgba(var(--navy-rgb), 0.4); }
+
+/* A short reassurance block beside the deal form. */
+.safe-note {
+  margin-top: 26px; padding: 22px 24px;
+  background: var(--blue-tint); border: 1px solid var(--blue-line);
+  border-left: 4px solid var(--gold); border-radius: var(--radius-card);
+}
+.safe-note h4 { font-size: 0.98rem; margin-bottom: 8px; color: var(--navy); }
+.safe-note p { font-size: 0.9rem; color: var(--ink-soft); }
+.safe-note ul { margin-top: 10px; display: grid; gap: 7px; }
+.safe-note li { display: flex; gap: 10px; font-size: 0.88rem; color: var(--ink-soft); }
+.safe-note li::before { content: "\2715"; color: var(--ink-soft); opacity: 0.6; font-weight: 700; flex: none; }
+
+/* Two-step progressive form. Each step fires a real submit so an
+   abandoned form still produces a usable lead. */
+.form-steps { display: flex; gap: 10px; margin-bottom: 28px; }
+.form-step-pip {
+  flex: 1; display: flex; flex-direction: column; gap: 8px;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.form-step-pip::before { content: ""; height: 4px; border-radius: 3px; background: var(--line-strong); }
+.form-step-pip.is-active { color: var(--gold-deep); }
+.form-step-pip.is-active::before { background: var(--gold); }
+.form-step-pip.is-done::before { background: var(--green); }
+.form-step[hidden] { display: none; }
+
+/* ---------- THANK YOU ---------- */
+.thankyou { padding-top: 160px; }
+.thankyou-card { max-width: 640px; margin: 0 auto; text-align: center; }
+.thankyou-icon {
+  width: 84px; height: 84px; margin: 0 auto 28px; border-radius: 50%;
+  background: rgba(var(--green-rgb), 0.14); display: flex; align-items: center;
+  justify-content: center; color: var(--green-deep);
+}
+.thankyou-icon svg { width: 42px; height: 42px; }
+.thankyou-card h1 { margin-bottom: 16px; }
+.thankyou-card p { max-width: 540px; margin: 0 auto 24px; color: var(--ink-soft); font-size: 1.08rem; }
+.thankyou-card .cta-actions { justify-content: center; }
+
+/* ---------- PROSE (legal, articles) ---------- */
+.prose > p:first-of-type { font-size: 1.06rem; color: var(--ink); margin-bottom: 8px; }
+.legal-updated {
+  color: var(--ink-soft); font-size: 0.84rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; margin-bottom: 30px;
+}
+.prose h2 { font-size: 1.5rem; margin: 34px 0 12px; }
+.prose h3 { font-size: 1.2rem; margin: 24px 0 10px; }
+.prose p, .prose li { color: var(--ink-soft); margin-bottom: 12px; }
+.prose ul { padding-left: 22px; list-style: disc; margin-bottom: 12px; }
+.prose ol { padding-left: 22px; margin-bottom: 12px; }
+.prose a { color: var(--navy); border-bottom: 1px solid rgba(var(--navy-rgb), 0.4); }
+.prose a:hover { color: var(--gold-deep); border-color: var(--gold-deep); }
+.prose blockquote {
+  margin: 20px 0; padding: 20px 26px; background: var(--blue-tint);
+  border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0;
+  font-family: var(--font-accent); font-style: italic; font-size: 1.1rem; color: var(--navy);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1100px) {
+  .container { padding: 50px 36px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 30px; }
+  .assurance-grid { grid-template-columns: 1fr; gap: 36px; }
+  .program-grid { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .res-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .value-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .scenario-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+}
+@media (max-width: 900px) {
+  section { padding: 70px 0; }
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+  .hero { min-height: 80vh; padding: 130px 0 80px; }
+  .assurance-grid, .feature-grid { grid-template-columns: 1fr; gap: 36px; }
+  .feature-grid.reverse .feature-media { order: 0; }
+  .feature-media, .feature-media img { min-height: 320px; }
+  .process-grid { grid-template-columns: repeat(2, 1fr); }
+  .serve-grid { grid-template-columns: 1fr; }
+  .res-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .hours-grid { grid-template-columns: 1fr; }
+  .gallery-stage { height: 340px; }
+  /* 6 pillars and 6 scenarios go 3-up to 2x3, never a 2+1 orphan. */
+  .value-grid { grid-template-columns: repeat(2, 1fr); }
+  .scenario-grid { grid-template-columns: repeat(2, 1fr); }
+  .fit-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  body { font-size: 16px; }
+  .container { width: calc(100% - 32px); padding: 36px 22px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: 28px 20px; }
+  .program-card { grid-template-columns: 1fr; }
+  .program-card img { min-height: 0; aspect-ratio: 16 / 9; border-right: none; border-bottom: 3px solid var(--gold); }
+  .process-grid { grid-template-columns: 1fr; }
+  .proof-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .field-row { grid-template-columns: 1fr; }
+  .gallery-stage { height: 230px; }
+  .gallery-slide { width: 82%; }
+  .gallery-slide.is-prev { transform: translateX(-118%) scale(0.8); }
+  .gallery-slide.is-next { transform: translateX(18%) scale(0.8); }
+  .gallery-slide figcaption { font-size: 0.95rem; padding: 20px 16px 14px; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; }
+  .cta-actions { flex-direction: column; }
+  .cta-actions .btn { width: 100%; }
+  .page-hero { padding: 135px 0 60px; }
+  .qa-q { padding: 20px 20px; font-size: 1rem; }
+  .qa-a-inner { padding: 0 20px 22px; }
+  .form-card { padding: 28px 22px; }
+  .form-steps { flex-direction: column; gap: 8px; }
+  .value-grid { grid-template-columns: 1fr; }
+  .scenario-grid { grid-template-columns: 1fr; }
+  .flow-step { grid-template-columns: auto 1fr; gap: 16px; padding: 24px 20px; }
+  .flow-num { width: 46px; height: 46px; font-size: 1.3rem; }
+  .anchor-nav a { padding: 8px 15px; font-size: 0.82rem; }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee-track { animation: none; flex-wrap: wrap; justify-content: center; width: 100%; }
+  .gallery-slide { transition: none; }
+  .btn:hover, .program-card:hover, .step:hover, .res-card:hover,
+  .serve-card:hover, .assurance-item:hover, .value-card:hover,
+  .scenario-card:hover { transform: none; }
+}
