@@ -6,6 +6,11 @@
    Structure: locked navy body background, warm sandstone light
    frames floating over it, gold Playfair italic as the only
    accent face, green reserved exclusively for calls to action.
+
+   Chrome (sticky nav, mobile drawer, footer) runs navy with
+   white links and gold underlines. Those three are the only
+   full-bleed bands in the build, so they read as chrome rather
+   than as content frames. Every content frame stays sandstone.
    ============================================================ */
 
 /* ---------- RESET ---------- */
@@ -49,11 +54,17 @@ input, textarea, select { font-family: inherit; }
 
   /* Frames: sandstone / wheat, pushed heavier than a plain cream */
   --frame: rgba(243, 237, 226, 0.94);
-  --frame-nav: rgba(243, 237, 226, 0.93);
   --frame-card: rgba(252, 249, 243, 0.97);
   --frame-deep: rgba(11, 20, 37, 0.94);
   --frame-deep-text: #EAF1F9;
   --frame-deep-soft: #A8BBD4;
+
+  /* Navy chrome: sticky nav, mobile drawer, footer */
+  --chrome-bg: rgba(11, 20, 37, 0.94);
+  --chrome-text: #F2F6FB;
+  --chrome-soft: #A8BBD4;
+  --chrome-line: rgba(255, 255, 255, 0.13);
+  --chrome-gold-line: rgba(178, 144, 99, 0.32);
 
   --line: rgba(40, 48, 66, 0.14);
   --line-strong: rgba(40, 48, 66, 0.22);
@@ -222,15 +233,17 @@ section[id] { scroll-margin-top: 96px; }
 
 /* ============================================================
    NAV
-   Nav takes the same sandstone frame tone as the section cards,
-   so nav, cards, and footer read as one framing system.
+   Navy band with a gold hairline beneath it. The logo is cream
+   and gold on transparent, so it needs a dark ground to read at
+   all. Links are white; gold is reserved for the underline and
+   the active state, which keeps one accent doing one job.
    ============================================================ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--frame-nav);
+  background: var(--chrome-bg);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid var(--chrome-gold-line);
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
 }
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -245,25 +258,27 @@ section[id] { scroll-margin-top: 96px; }
 .brand-word { display: flex; flex-direction: column; line-height: 1; }
 .brand-word strong {
   font-family: var(--font-body); font-weight: 700; font-size: 1.16rem;
-  letter-spacing: 0.02em; text-transform: uppercase; color: var(--heading);
+  letter-spacing: 0.02em; text-transform: uppercase; color: var(--chrome-text);
 }
 .brand-word span {
   font-family: var(--font-accent); font-style: italic; font-size: 1rem;
-  color: var(--gold-deep); margin-top: 3px;
+  color: var(--gold-bright); margin-top: 3px;
 }
 
 .nav-links { display: flex; align-items: center; gap: 26px; }
 .nav-links a {
-  font-size: 0.95rem; font-weight: 500; color: var(--ink);
+  font-size: 0.95rem; font-weight: 500; color: var(--chrome-text);
   padding: 6px 0; position: relative; transition: color 0.2s ease;
 }
 .nav-links a::after {
   content: ""; position: absolute; left: 0; bottom: 0; width: 0; height: 2px;
-  background: var(--gold); transition: width 0.25s ease;
+  background: var(--gold-bright); transition: width 0.25s ease;
 }
-.nav-links a:hover, .nav-links a.is-active { color: var(--navy); font-weight: 600; }
+.nav-links a:hover, .nav-links a.is-active { color: #fff; font-weight: 600; }
 .nav-links a:hover::after, .nav-links a.is-active::after { width: 100%; }
-.nav-phone { font-weight: 700 !important; color: var(--navy) !important; white-space: nowrap; }
+.nav-phone { font-weight: 700 !important; color: var(--gold-bright) !important; white-space: nowrap; }
+.nav-phone::after { display: none; }
+.nav-phone:hover { color: #fff !important; }
 .nav-cta {
   font-weight: 600; background: var(--green); color: #fff !important;
   padding: 11px 22px; border-radius: 8px;
@@ -277,7 +292,7 @@ section[id] { scroll-margin-top: 96px; }
 .hamburger { display: none; position: relative; width: 48px; height: 48px; margin-left: auto; z-index: 220; }
 .hamburger span {
   position: absolute; left: 11px; width: 26px; height: 2.5px;
-  background: var(--navy); border-radius: 2px;
+  background: var(--chrome-text); border-radius: 2px;
   transition: transform 0.3s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.5, 0, 0.2, 1);
 }
 .hamburger span:nth-child(1) { top: 16px; }
@@ -287,7 +302,9 @@ section[id] { scroll-margin-top: 96px; }
 .hamburger.is-open span:nth-child(2) { opacity: 0; }
 .hamburger.is-open span:nth-child(3) { transform: translateY(-6.75px) rotate(-45deg); }
 
-/* ---------- MOBILE MENU ---------- */
+/* ---------- MOBILE MENU ----------
+   The drawer is the nav on small screens, so it takes the same
+   navy treatment rather than reverting to sandstone. */
 .nav-backdrop {
   position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px);
   opacity: 0; pointer-events: none; transition: opacity 0.35s ease; z-index: 200;
@@ -295,19 +312,19 @@ section[id] { scroll-margin-top: 96px; }
 .nav-backdrop.is-open { opacity: 1; pointer-events: auto; }
 .mobile-menu {
   position: fixed; top: 0; right: 0; bottom: 0; width: min(82vw, 360px);
-  background: var(--frame); border-left: 3px solid var(--gold);
-  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.4);
+  background: rgba(11, 20, 37, 0.98); border-left: 3px solid var(--gold);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.55);
   padding: 96px 30px 50px; transform: translateX(100%);
   transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1);
   z-index: 210; display: flex; flex-direction: column; overflow-y: auto;
 }
 .mobile-menu.is-open { transform: translateX(0); }
 .mobile-menu a {
-  font-size: 1.1rem; font-weight: 600; color: var(--heading);
-  padding: 15px 0; border-bottom: 1px solid var(--line);
+  font-size: 1.1rem; font-weight: 600; color: var(--chrome-text);
+  padding: 15px 0; border-bottom: 1px solid var(--chrome-line);
   transition: color 0.3s ease, padding-left 0.3s ease;
 }
-.mobile-menu a:hover, .mobile-menu a.is-active { color: var(--gold-deep); padding-left: 8px; }
+.mobile-menu a:hover, .mobile-menu a.is-active { color: var(--gold-bright); padding-left: 8px; }
 .mobile-menu .btn { margin-top: 24px; width: 100%; }
 .mobile-menu .btn:hover { padding-left: 30px; }
 
@@ -361,7 +378,7 @@ section[id] { scroll-margin-top: 96px; }
 .page-hero--short::before { background: none; }
 
 /* ============================================================
-   MARQUEE (the only full-bleed band)
+   MARQUEE
    ============================================================ */
 .marquee {
   background: var(--frame-deep);
@@ -928,59 +945,67 @@ section[id] { scroll-margin-top: 96px; }
 
 /* ============================================================
    FOOTER
-   Same sandstone frame tone as the nav and the cards.
+   Navy band matching the nav, with a gold rule across the top.
+   The cream and gold logo reads properly here, headings run
+   white, and body copy runs the light muted blue.
    ============================================================ */
-.footer { background: var(--frame); border-top: 3px solid var(--gold); color: var(--ink-soft); padding: 70px 0 30px; }
+.footer {
+  background: var(--chrome-bg);
+  border-top: 3px solid var(--gold);
+  color: var(--chrome-soft);
+  padding: 70px 0 30px;
+}
 .footer-grid {
   display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 40px;
   max-width: var(--container); margin: 0 auto; padding: 0 24px;
 }
 .footer-brand img { height: 62px; width: auto; margin-bottom: 14px; }
-.footer-brand p { margin-top: 6px; font-size: 0.94rem; max-width: 330px; color: var(--ink-soft); }
+.footer-brand p { margin-top: 6px; font-size: 0.94rem; max-width: 330px; color: var(--chrome-soft); }
 .footer-tag {
   font-family: var(--font-accent); font-style: italic; font-size: 1.14rem;
-  color: var(--gold-deep); margin-top: 14px !important;
+  color: var(--gold-bright); margin-top: 14px !important;
 }
 .footer h4 {
   font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--heading); margin-bottom: 18px;
+  color: #fff; margin-bottom: 18px;
 }
 .footer ul li { margin-bottom: 11px; }
-.footer ul a, .footer-contact a, .footer-contact span { color: var(--ink-soft); font-size: 0.94rem; transition: color 0.2s ease; }
-.footer ul a:hover, .footer-contact a:hover { color: var(--navy); }
+.footer ul a, .footer-contact a, .footer-contact span { color: var(--chrome-soft); font-size: 0.94rem; transition: color 0.2s ease; }
+.footer ul a:hover, .footer-contact a:hover { color: var(--gold-bright); }
 .footer-contact li { display: flex; gap: 10px; align-items: flex-start; }
 
 /* Business purpose disclaimer. Sits on every page, above the
    bottom row, and is repeated in full on disclosures.html. */
 .footer-disclaimer {
   max-width: var(--container); margin: 46px auto 0; padding: 22px 24px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--chrome-line);
 }
 .footer-disclaimer p {
-  font-size: 0.82rem; line-height: 1.62; color: var(--ink-soft); max-width: 980px;
+  font-size: 0.82rem; line-height: 1.62; color: var(--chrome-soft); max-width: 980px;
 }
-.footer-disclaimer strong { color: var(--navy); font-weight: 700; }
-.footer-disclaimer a { color: var(--navy); border-bottom: 1px solid rgba(var(--navy-rgb), 0.35); }
+.footer-disclaimer strong { color: #fff; font-weight: 700; }
+.footer-disclaimer a { color: var(--gold-bright); border-bottom: 1px solid rgba(var(--gold-rgb), 0.5); }
+.footer-disclaimer a:hover { color: #fff; border-color: rgba(255, 255, 255, 0.6); }
 
 .footer-bottom {
   max-width: var(--container); margin: 24px auto 0; padding: 22px 24px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--chrome-line);
   display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
-  gap: 14px; font-size: 0.86rem; color: var(--ink-soft);
+  gap: 14px; font-size: 0.86rem; color: var(--chrome-soft);
 }
 .footer-legal-links { display: flex; gap: 18px; flex-wrap: wrap; }
-.footer-legal-links a { color: var(--ink-soft); }
-.footer-legal-links a:hover { color: var(--navy); }
+.footer-legal-links a { color: var(--chrome-soft); }
+.footer-legal-links a:hover { color: var(--gold-bright); }
 .footer-social { display: flex; gap: 14px; }
 .footer-social a {
   width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-  border-radius: 8px; background: rgba(var(--gold-rgb), 0.14); color: var(--gold-deep);
+  border-radius: 8px; background: rgba(var(--gold-rgb), 0.2); color: var(--gold-bright);
   transition: background 0.2s ease, color 0.2s ease;
 }
 .footer-social a:hover { background: var(--gold); color: #fff; }
 .footer-social svg { width: 18px; height: 18px; }
-.otm-credit { color: var(--navy) !important; font-weight: 600; border-bottom: 1px solid rgba(var(--navy-rgb), 0.4); }
-.otm-credit:hover { color: var(--gold-deep) !important; border-color: var(--gold-deep); }
+.otm-credit { color: var(--chrome-soft) !important; font-weight: 600; border-bottom: 1px solid rgba(255, 255, 255, 0.3); }
+.otm-credit:hover { color: var(--gold-bright) !important; border-color: var(--gold-bright); }
 
 /* ============================================================
    FORMS
